@@ -32,6 +32,7 @@ int main(int argc, char **argv)
 			perror(argv[0]);
 		}
 		_strncat(argv[1], lineptr, _strlen(lineptr) - 1);
+		argv[2] = NULL;
 		execmd(argv);
 	}	
 	free(lineptr);
