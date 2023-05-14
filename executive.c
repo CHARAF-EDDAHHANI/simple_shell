@@ -12,8 +12,7 @@ void execmd(char **argv)
 	{
 		if (execve(argv[1], argv + 1, environ) == -1)
 		{
-			write(STDERR_FILENO, argv[0], _strlen(argv[0]));
-			perror("");
+			perror(argv[0]);
 			exit(EXIT_FAILURE);
 		}
 	}

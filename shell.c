@@ -29,8 +29,7 @@ int main(int argc, char **argv)
 		argv[1] = malloc(sizeof(char) * _strlen(lineptr));
 		if (!argv[1])
 		{
-			write(STDERR_FILENO, argv[0], _strlen(argv[0]));
-			perror("");
+			perror(argv[0]);
 		}
 		_strncat(argv[1], lineptr, _strlen(lineptr) - 1);
 		execmd(argv);
