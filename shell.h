@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern char **environ;
 
@@ -21,5 +22,7 @@ char *_memcpy(char *dest, char *src, size_t n);
 char *_strncat(char *dest, char *src, size_t n);
 char *_strchr(char *str, char c);
 void execmd(char **argv);
+int count_token(char *lineptr, const char *delim);
+char **parse_input(char *execName, char *lineptr);
 
 #endif /* SHELL_H */
