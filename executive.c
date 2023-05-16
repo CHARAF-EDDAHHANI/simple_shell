@@ -9,27 +9,23 @@
 
 int execmd(char **argv)
 {
-	char *envPath, *cmd, *error;
+	char *envPath, *cmd;
 
 	/* get environment PATH value */
 	envPath = _getenv("PATH");
 	if (argv)
 	{
 		cmd = _which(argv[1], envPath);
-		if (cmd)
+		if (!cmd)
 		{
-			if (execve(cmd, argv + 1, environ) == -1)
-			{
+			cmd = _strdup(argv[1]);
+			if (!cmd)
 				perror(argv[0]);
-				return (errno);
-				/*exit(EXIT_FAILURE);*/
-			}
 		}
-		else
+		if (execve(cmd, argv + 1, environ) == -1)
 		{
-			error = build_error(argv[0], argv[1], "command not found");
-			write(STDERR_FILENO, error, _strlen(error));
-			return (127);
+			perror(argv[0]);
+			return (errno);
 		}
 	}
 	return (0);
@@ -61,3 +57,13 @@ char *build_error(char *exe, char *cmd, char *errorDesc)
 	return (error);
 }
 
+/**
+ * siging - prints a new line when a signal SIGINT is sent
+ * @signal: the sent signal
+ */
+
+void sigign(int signal)
+{
+	if (signal == SIGINT)
+		write(STDIN_FILENO, "\n$ ", 3);
+}

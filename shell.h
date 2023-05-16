@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <signal.h>
 
 extern char **environ;
 
@@ -31,5 +32,6 @@ void buildPath(char *dirPath, char *cmd, char *path);
 char *_which(char *cmd, char *envPath);
 char *_getenv(const char *name);
 char *build_error(char *exe, char *cmd, char *errorDesc);
+void sigign(int signal);
 
 #endif /* SHELL_H */

@@ -17,7 +17,8 @@ int main(int argc, char **argv)
 	(void)argc;
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
+		if (isatty(STDIN_FILENO) == 1)
+			write(STDOUT_FILENO, "$ ", 2);
 		nbchar = getline(&lineptr, &n, stdin);
 		if (nbchar == -1)
 		{
@@ -25,6 +26,8 @@ int main(int argc, char **argv)
 			write(STDOUT_FILENO, "\n", 1);
 			return (0);
 		}
+		if (_strcmp(lineptr, "\n") == 0)
+			continue;
 		argv = parse_input(argv[0], lineptr);
 		execmd(argv);
 	}
