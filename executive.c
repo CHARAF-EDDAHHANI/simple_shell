@@ -14,7 +14,7 @@ int execmd(char **argv)
 	int st;
 
 	/* get environment PATH value */
-	envPath = _getenv("PATH");
+	envPath = _getenv2("PATH");
 	if (argv)
 	{
 		cmd = _which(argv[1], envPath);

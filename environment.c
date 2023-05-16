@@ -2,8 +2,8 @@
 
 /**
  * _getenv - gets an environment variable
- * @name: the envirment variable name
- * Return: the environment variable
+ * @name: the environment variable name
+ * Return: the environment variable value
  */
 char *_getenv(const char *name)
 {
@@ -22,6 +22,31 @@ char *_getenv(const char *name)
 		envp++;
 	}
 	free(envp);
+	return (NULL);
+}
+
+
+/**
+ * _getenv2 - gets an environment variable
+ * @name: the environment variable name
+ * Return: the environment variable value
+ */
+
+char *_getenv2(const char *name)
+{
+	char *token;
+	char **envp = environ;
+
+	while (envp)
+	{
+		token = strtok(*envp, "=");
+		if (token)
+		{
+			if (_strcmp(token, name) == 0)
+				return (strtok(NULL, "="));
+		}
+		envp++;
+	}
 	return (NULL);
 }
 

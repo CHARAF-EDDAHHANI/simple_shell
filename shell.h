@@ -34,5 +34,6 @@ char *_which(char *cmd, char *envPath);
 char *_getenv(const char *name);
 char *build_error(char *exe, char *cmd, char *errorDesc);
 void sigign(int signal);
+char *_getenv2(const char *name);
 
 #endif /* SHELL_H */
