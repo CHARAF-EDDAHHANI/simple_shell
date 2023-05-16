@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 extern char **environ;
 
@@ -21,8 +24,12 @@ void *_realloc(void *ptr, size_t old_size, size_t new_size);
 char *_memcpy(char *dest, char *src, size_t n);
 char *_strncat(char *dest, char *src, size_t n);
 char *_strchr(char *str, char c);
-void execmd(char **argv);
+int execmd(char **argv);
 int count_token(char *lineptr, const char *delim);
 char **parse_input(char *execName, char *lineptr);
+void buildPath(char *dirPath, char *cmd, char *path);
+char *_which(char *cmd, char *envPath);
+char *_getenv(const char *name);
+char *build_error(char *exe, char *cmd, char *errorDesc);
 
 #endif /* SHELL_H */
