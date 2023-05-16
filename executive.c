@@ -10,6 +10,8 @@
 int execmd(char **argv)
 {
 	char *envPath, *cmd;
+	pid_t pid;
+	int st;
 
 	/* get environment PATH value */
 	envPath = _getenv("PATH");
@@ -22,11 +24,22 @@ int execmd(char **argv)
 			if (!cmd)
 				perror(argv[0]);
 		}
-		if (execve(cmd, argv + 1, environ) == -1)
+		pid = fork();
+		if (pid == -1)
 		{
 			perror(argv[0]);
-			return (errno);
+			exit(EXIT_FAILURE);
 		}
+		if (pid == 0)
+		{
+			
+			if (execve(cmd, argv + 1, environ) == -1)
+			{
+				perror(argv[0]);
+				return (errno);
+			}
+		}
+		wait(&st);
 	}
 	return (0);
 }
