@@ -11,6 +11,19 @@
 #include <signal.h>
 #include <sys/wait.h>
 
+/**
+ * struct buildin - Struct build-in commands
+ *
+ * @cmd: The build-in command
+ * @func: the function associated
+ */
+typedef struct buildin
+{
+	char *cmd;
+int (*func)();
+} buildin_t;
+
+
 extern char **environ;
 
 char *_strdup(char *str);
@@ -35,5 +48,10 @@ char *_getenv(const char *name);
 char *build_error(char *exe, char *cmd, char *errorDesc);
 void sigign(int signal);
 char *_getenv2(const char *name);
+char *build_error2(char *exe, char *cmd);
+void free_list(char **ptr, int i);
+int (*get_buildin_func(char *c))(void);
+int my_exit(void);
+int my_env(void);
 
 #endif /* SHELL_H */

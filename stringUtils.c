@@ -75,7 +75,10 @@ char **_strtok(char *str, const char *delim)
 		return (NULL);
 	tokens = malloc(sizeof(char *) * (nbrTokens + 1));
 	if (!tokens)
+	{
+		perror("Error : malloc");
 		return (NULL);
+	}
 	len = _strlen(str);
 	for (i = 0; i <= len; i++)
 	{
@@ -89,15 +92,14 @@ char **_strtok(char *str, const char *delim)
 				tokens[k] = malloc((tLen + 1) * sizeof(char));
 				if (!tokens[k])
 				{
+					perror("Error : malloc");
 					while (k >= 0)
-						free(tokens[--k]);
-					free(tokens);
+						free_list(tokens, k);
 				}
 				for (j = tStart, l = 0; j <= tEnd; j++, l++)
 					tokens[k][l] = str[j];
 				tokens[k][l] = '\0';
-				tLen = 0;
-				k++;
+				tLen = 0, k++;
 			}
 		}
 	}
@@ -122,7 +124,10 @@ char *_strdup(char *str)
 	dupString = malloc(sizeof(char) * (length + 1));
 	/* Check if the allocation it fails or not */
 	if (!dupString)
+	{
+		perror("Error : malloc");
 		return (NULL);
+	}
 	/* copy the string */
 	for (i = 0; i < length; i++)
 		dupString[i] = str[i];

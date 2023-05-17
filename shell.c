@@ -23,8 +23,9 @@ int main(int argc, char **argv)
 		if (nbchar == -1)
 		{
 			free(lineptr);
-			write(STDOUT_FILENO, "\n", 1);
-			return (0);
+			if (isatty(STDIN_FILENO) == 1)
+				write(STDOUT_FILENO, "\n", 1);
+			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(lineptr, "\n") == 0)
 			continue;
@@ -32,6 +33,6 @@ int main(int argc, char **argv)
 		execmd(argv);
 	}
 	free(lineptr);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 

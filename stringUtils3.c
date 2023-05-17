@@ -57,3 +57,15 @@ int _strcmp(char *str1, const char *str2)
 	diff = str1[i] - str2[i];
 	return (diff);
 }
+
+/**
+ * free_list - free an array of string
+ * @ptr: the giving array to be freed
+ * @i: the last index of the array
+ */
+void free_list(char **ptr, int i)
+{
+	while (i > 0)
+		free(ptr[--i]);
+	free(ptr);
+}

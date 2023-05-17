@@ -75,13 +75,19 @@ void *_realloc(void *ptr, size_t old_size, size_t new_size)
 	{
 		newptr = malloc(new_size);
 		if (!newptr)
+		{
+			perror("Error : malloc");
 			return (NULL);
+		}
 		free(ptr);
 		return (newptr);
 	}
 	newptr = malloc(new_size);
 	if (!newptr)
+	{
+		perror("Error : malloc");
 		return (NULL);
+	}
 	if (new_size > old_size)
 		_memcpy(newptr, ptr, old_size);
 	else

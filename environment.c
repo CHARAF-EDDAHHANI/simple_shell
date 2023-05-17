@@ -36,17 +36,23 @@ char *_getenv2(const char *name)
 {
 	char *token;
 	char **envp = environ;
+	char *variable;
 
 	while (envp)
 	{
-		token = strtok(*envp, "=");
+		variable = _strdup(*envp);
+		if (!variable)
+			return (NULL);
+		token = strtok(variable, "=");
 		if (token)
 		{
 			if (_strcmp(token, name) == 0)
 				return (strtok(NULL, "="));
 		}
 		envp++;
+		free(variable);
 	}
+	free(envp);
 	return (NULL);
 }
 
@@ -63,7 +69,6 @@ void printDirPaths(char *path)
 	{
 		while (*dirPaths)
 		{
-			/*printf("%s\n", *dirPaths);*/
 			write(STDOUT_FILENO, *dirPaths, _strlen(*dirPaths));
 			write(STDOUT_FILENO, "\n", 1);
 			dirPaths++;
