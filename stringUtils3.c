@@ -69,3 +69,20 @@ void free_list(char **ptr, int i)
 		free(ptr[--i]);
 	free(ptr);
 }
+
+/**
+ * array_len - returns the length of an array of pointers
+ * @args: a pointer of pointers to arguments
+ * Return: the number of arguments
+ */
+int array_len(char **args)
+{
+	int len = 0;
+
+	while (*args != NULL)
+	{
+		len++;
+		args++;
+	}
+	return (len);
+}

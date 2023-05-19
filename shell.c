@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	ssize_t nbchar = 0;
 	size_t n = 0;
 	char *lineptr = NULL;
+	char **e = environ;
 
 	(void)argc;
 	while (1)
@@ -30,7 +31,7 @@ int main(int argc, char **argv)
 		if (_strcmp(lineptr, "\n") == 0)
 			continue;
 		argv = parse_input(argv[0], lineptr);
-		execmd(argv);
+		execmd(array_len(argv), argv, &e);
 	}
 	free(lineptr);
 	exit(EXIT_SUCCESS);

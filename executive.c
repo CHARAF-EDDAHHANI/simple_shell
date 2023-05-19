@@ -3,49 +3,50 @@
 
 /**
  * execmd - executes the giving command
+ * @argc: number of arguments
  * @argv: an array of arguments
+ * @e: an array of environement variables
  * Return: status code
  */
 
-int execmd(char **argv)
+int execmd(int argc, char **argv, char ***e)
 {
 	char *envPath, *cmd;
 	pid_t pid;
 	int st;
-	int (*p_func)(void);
+	int (*p_func)(int argc, char **args, char ***e);
 
 	/* get environment PATH value */
-	envPath = _getenv2("PATH");
+	envPath = _getenv2("PATH", *e);
 	if (argv)
 	{
 		p_func = get_buildin_func(argv[1]);
 		if (p_func != NULL)
-			p_func();
+			p_func(argc, argv, e);
 		else
 		{
 			cmd = _which(argv[1], envPath);
-			if (!cmd)
+			if (cmd != NULL)
 			{
-				cmd = _strdup(argv[1]);
-				if (!cmd)
-					perror(argv[0]);
-			}
-			pid = fork();
-			if (pid == -1)
-			{
-				perror(build_error2(argv[0], "fork"));
-				exit(EXIT_FAILURE);
-			}
-			if (pid == 0)
-			{
-				if (execve(cmd, argv + 1, environ) == -1)
+				pid = fork();
+				if (pid == -1)
 				{
-					perror(build_error2(argv[0], "execve"));
+					perror(build_error2(argv[0], "fork"));
 					exit(EXIT_FAILURE);
 				}
+				if (pid == 0)
+				{
+					if (execve(cmd, argv + 1, *e) == -1)
+					{
+						perror(build_error2(argv[0], "execve"));
+						exit(EXIT_FAILURE);
+					}
+				}
+				wait(&st);
+				free(cmd);
 			}
-			wait(&st);
-			free(cmd);
+			else
+				perror(build_error2(argv[0], "Error _which"));
 		}
 	}
 	return (0);

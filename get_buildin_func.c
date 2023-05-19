@@ -6,18 +6,20 @@
  * Return: the associated function
  */
 
-int (*get_buildin_func(char *c))(void)
+int (*get_buildin_func(char *c))(int argc, char **args, char ***e)
 {
 	buildin_t b_in[] = {
 		{"exit", my_exit},
 		{"env", my_env},
+		{"setenv", set_env},
+		{"unsetenv", unset_env},
 		{NULL, NULL}
 	};
 	int i;
 
 	i = 0;
 
-	while (i < 2)
+	while (i < 4)
 	{
 		if (!_strcmp(b_in[i].cmd, c))
 			return (b_in[i].func);
