@@ -46,8 +46,21 @@ In this project we implement a simple UNIX command interpreter.
 - wait4 (man 2 wait4)
 - write (man 2 write)
 
+## Accepted Build in Commands
+| Command	| Description		|
+| ------------- | ----------------------- |
+| exit | - The command to exit the shell. <br/>- Usage : exit status (where status is an integer used to exit the shell). | 
+| setenv | - The command to initialize a new environment variable, or modify an existing one. <br/>- Usage : setenv VARIABLE VALUE |
+| unsetenv | - The command to remove an environment variable. <br/>- Usage : unsetenv VARIABLE |
+| env | - The command to print the current environment variables. |
+| cd | - The command to change the working directory. <br/>- Usage : cd <DIRECTORY> |
 
-
+## Commands
+This simple shell can:
+- Handle simple command with or without arguments.
+- Determine the path of the command entered without path.
+- Handle the “end of file” condition (Ctrl+D).
+- Display the prompt again each time a command has been executed.
 
 # Copyright
 Authors : Charaf EDDAHHANI & Hajar EL ABDELLAOUI
