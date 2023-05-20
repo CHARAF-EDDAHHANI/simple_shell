@@ -18,8 +18,7 @@ int main(int argc, char **argv)
 	(void)argc;
 	while (1)
 	{
-		if (isatty(STDIN_FILENO) == 1)
-			write(STDOUT_FILENO, "$ ", 2);
+		print_prompt();
 		nbchar = getline(&lineptr, &n, stdin);
 		if (nbchar == -1)
 		{
@@ -28,9 +27,11 @@ int main(int argc, char **argv)
 				write(STDOUT_FILENO, "\n", 1);
 			exit(EXIT_SUCCESS);
 		}
-		if (_strcmp(lineptr, "\n") == 0)
-			continue;
+		/*if (_strcmp(lineptr, "\n") == 0)
+			continue;*/
 		argv = parse_input(argv[0], lineptr);
+		if (array_len(argv) == 1)
+			continue;
 		execmd(array_len(argv), argv, &e);
 	}
 	free(lineptr);
