@@ -23,3 +23,22 @@ void free_node(envNode_t *node)
 	free(node->value);
 	free(node);
 }
+
+/**
+ * get_node_by_name - returns a value of environment variable
+ * @head: a pointer to the first node of the list
+ * @name: a name of the variable
+ * Return: the value of the variable
+ */
+char *get_node_by_name(envNode_t *head, char *name)
+{
+	envNode_t *current = head;
+
+	while (current != NULL)
+	{
+		if (_strcmp(current->name, name) == 0)
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}

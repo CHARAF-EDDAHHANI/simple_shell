@@ -48,7 +48,7 @@ char *_getenv2(const char *name, char **e)
 		if (token)
 		{
 			if (_strcmp(token, name) == 0)
-				return (strtok(NULL, "="));
+				return (strtok(NULL, "\0"));
 		}
 		envp++;
 		free(variable);

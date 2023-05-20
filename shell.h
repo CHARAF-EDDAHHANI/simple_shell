@@ -77,5 +77,7 @@ envNode_t *add_node_end(envNode_t **head, char *name, char *value);
 int set_env(int argc, char **args, char ***e);
 int array_len(char **args);
 int unset_env(int argc, char **args, char ***e);
+char *get_node_by_name(envNode_t *head, char *name);
+int my_cd(int argc, char **args, char ***e);
 
 #endif /* SHELL_H */
