@@ -79,5 +79,7 @@ int array_len(char **args);
 int unset_env(int argc, char **args, char ***e);
 char *get_node_by_name(envNode_t *head, char *name);
 int my_cd(int argc, char **args, char ***e);
+int _isdigit(int c);
+int _atoi(char *s);
 
 #endif /* SHELL_H */

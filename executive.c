@@ -22,32 +22,29 @@ int execmd(int argc, char **argv, char ***e)
 	{
 		p_func = get_buildin_func(argv[1]);
 		if (p_func != NULL)
-			p_func(argc, argv, e);
-		else
+			return (p_func(argc, argv, e));
+		cmd = _which(argv[1], envPath);
+		if (cmd != NULL)
 		{
-			cmd = _which(argv[1], envPath);
-			if (cmd != NULL)
+			pid = fork();
+			if (pid == -1)
 			{
-				pid = fork();
-				if (pid == -1)
+				perror(build_error2(argv[0], "fork"));
+				exit(EXIT_FAILURE);
+			}
+			if (pid == 0)
+			{
+				if (execve(cmd, argv + 1, *e) == -1)
 				{
-					perror(build_error2(argv[0], "fork"));
+					perror(build_error2(argv[0], "execve"));
 					exit(EXIT_FAILURE);
 				}
-				if (pid == 0)
-				{
-					if (execve(cmd, argv + 1, *e) == -1)
-					{
-						perror(build_error2(argv[0], "execve"));
-						exit(EXIT_FAILURE);
-					}
-				}
-				wait(&st);
-				free(cmd);
 			}
-			else
-				perror(build_error2(argv[0], "Error _which"));
+			wait(&st);
+			free(cmd);
 		}
+		else
+			perror(build_error2(argv[0], "Error _which"));
 	}
 	return (0);
 }

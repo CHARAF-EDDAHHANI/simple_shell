@@ -9,10 +9,30 @@
  */
 int my_exit(int argc, char **args, char ***e)
 {
-	(void)argc;
-	(void)args;
+	int status = 0, i;
+	char *error;
+
 	(void)e;
-	exit(0);
+	if (argc > 3)
+	{
+		error = build_error2(args[0], "Usage: exit status");
+		write(STDERR_FILENO, error, _strlen(error));
+		return (1);
+	}
+	if (args[2] != NULL)
+	{
+		for (i = 0; args[2][i] != '\0'; i++)
+		{
+			if (!_isdigit(args[2][i]))
+			{
+				error = build_error2(args[0], "exit : numeric argument required");
+				write(STDERR_FILENO, error, _strlen(error));
+				return (2);
+			}
+		}
+		status = _atoi(args[2]);
+	}
+	exit(status);
 }
 
 /**
