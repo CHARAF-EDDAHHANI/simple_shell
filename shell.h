@@ -20,7 +20,7 @@
 typedef struct buildin
 {
 	char *cmd;
-	int (*func)(int argc, char **args, char ***e);
+	int (*func)(int argc, char **args, char ***e, int s);
 } buildin_t;
 
 /**
@@ -51,7 +51,7 @@ void *_realloc(void *ptr, size_t old_size, size_t new_size);
 char *_memcpy(char *dest, char *src, size_t n);
 char *_strncat(char *dest, char *src, size_t n);
 char *_strchr(char *str, char c);
-int execmd(int argc, char **argv, char ***e);
+int execmd(int argc, char **argv, char ***e, int st);
 int count_token(char *lineptr, const char *delim);
 char **parse_input(char *execName, char *lineptr);
 void buildPath(char *dirPath, char *cmd, char *path);
@@ -62,9 +62,9 @@ void sigign(int signal);
 char *_getenv2(const char *name, char **e);
 char *build_error2(char *exe, char *cmd);
 void free_list(char **ptr, int i);
-int (*get_buildin_func(char *c))(int argc, char **args, char ***e);
-int my_exit(int argc, char **args, char ***e);
-int my_env(int argc, char **args, char ***e);
+int (*get_buildin_func(char *c))(int ac, char **as, char ***e, int s);
+int my_exit(int argc, char **args, char ***e, int s);
+int my_env(int argc, char **args, char ***e, int s);
 void free_node(envNode_t *node);
 void build_env_var(char *env_var, char *name, char *value);
 int list_len(envNode_t *list);
@@ -74,11 +74,11 @@ char **list_to_environ(envNode_t *head);
 int _setenv(envNode_t **head, char *name, char *value, int overwrite);
 envNode_t *convert_to_list(char **envp);
 envNode_t *add_node_end(envNode_t **head, char *name, char *value);
-int set_env(int argc, char **args, char ***e);
+int set_env(int argc, char **args, char ***e, int s);
 int array_len(char **args);
-int unset_env(int argc, char **args, char ***e);
+int unset_env(int argc, char **args, char ***e, int s);
 char *get_node_by_name(envNode_t *head, char *name);
-int my_cd(int argc, char **args, char ***e);
+int my_cd(int argc, char **args, char ***e, int s);
 int _isdigit(int c);
 int _atoi(char *s);
 void print_prompt(void);

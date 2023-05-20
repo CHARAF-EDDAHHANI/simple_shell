@@ -5,9 +5,10 @@
  * @argc: number of arguments
  * @args: a pointer of pointers to arguments
  * @e: a pointer of environment variables
+ * @s: the status of the previous command
  * Return: 0 success
  */
-int my_exit(int argc, char **args, char ***e)
+int my_exit(int argc, char **args, char ***e, int s)
 {
 	int status = 0, i;
 	char *error;
@@ -23,6 +24,8 @@ int my_exit(int argc, char **args, char ***e)
 	{
 		for (i = 0; args[2][i] != '\0'; i++)
 		{
+			if (i == 0 && args[2][i] == '-')
+				continue;
 			if (!_isdigit(args[2][i]))
 			{
 				error = build_error2(args[0], "exit : numeric argument required");
@@ -32,6 +35,8 @@ int my_exit(int argc, char **args, char ***e)
 		}
 		status = _atoi(args[2]);
 	}
+	else
+		status = s;
 	exit(status);
 }
 
@@ -40,15 +45,17 @@ int my_exit(int argc, char **args, char ***e)
  * @argc: number of arguments
  * @args: a pointer of pointers to arguments
  * @e: a pointer of environment variables
+ * @s: the status of the previous command
  * Return: 0 success
  */
 
-int my_env(int argc, char **args, char ***e)
+int my_env(int argc, char **args, char ***e, int s)
 {
 	char **envp = *e;
 
 	(void)argc;
 	(void)args;
+	(void)s;
 	while (*envp)
 	{
 		write(STDOUT_FILENO, *envp, _strlen(*envp));
@@ -63,14 +70,16 @@ int my_env(int argc, char **args, char ***e)
  * @argc: number of arguments
  * @args: a pointer of pointers to arguments
  * @e: a pointer of pointers to environment variables
+ * @s: the status of the previous command
  * Return: 0 success
  */
-int set_env(int argc, char **args, char ***e)
+int set_env(int argc, char **args, char ***e, int s)
 {
 	envNode_t *env;
 	int ret;
 	char *error;
 
+	(void)s;
 	if (argc != 4)
 	{
 		error = build_error(args[0], "setenv", "Usage : setenv VARIABLE VALUE");
@@ -94,13 +103,15 @@ int set_env(int argc, char **args, char ***e)
  * @argc: number of arguments
  * @args: an array of pointer to arguments
  * @e: a pointer to environment variables
+ * @s: the status of the previous command
  * Return: 0 Success
  */
-int unset_env(int argc, char **args, char ***e)
+int unset_env(int argc, char **args, char ***e, int s)
 {
 	envNode_t *env;
 	char *error;
 
+	(void)s;
 	if (argc != 3)
 	{
 		error = build_error(args[0], "unsetenv", "Usage : unsetenv VARIABLE");
@@ -118,9 +129,10 @@ int unset_env(int argc, char **args, char ***e)
  * @argc: number of arguments
  * @args: an array of pointer to arguments
  * @e: a pointer to environment variables
+ * @s: the status of the previous command
  * Return: 0 Success
  */
-int my_cd(int argc, char **args, char ***e)
+int my_cd(int argc, char **args, char ***e, __attribute__((unused)) int s)
 {
 	char *new_dir, *old, *error;
 	int retVal = 0;

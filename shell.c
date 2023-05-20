@@ -14,6 +14,7 @@ int main(int argc, char **argv)
 	size_t n = 0;
 	char *lineptr = NULL;
 	char **e = environ;
+	int status = 0, len = 0;
 
 	(void)argc;
 	while (1)
@@ -25,16 +26,17 @@ int main(int argc, char **argv)
 			free(lineptr);
 			if (isatty(STDIN_FILENO) == 1)
 				write(STDOUT_FILENO, "\n", 1);
-			exit(EXIT_SUCCESS);
+			if (status != 0)
+				exit(status);
+			return (0);
 		}
-		/*if (_strcmp(lineptr, "\n") == 0)
-			continue;*/
 		argv = parse_input(argv[0], lineptr);
-		if (array_len(argv) == 1)
+		len = array_len(argv);
+		if (len == 1)
 			continue;
-		execmd(array_len(argv), argv, &e);
+		status = execmd(len, argv, &e, status);
 	}
 	free(lineptr);
-	exit(EXIT_SUCCESS);
+	return (0);
 }
 

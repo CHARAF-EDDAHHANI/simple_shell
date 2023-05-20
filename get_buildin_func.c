@@ -6,7 +6,7 @@
  * Return: the associated function
  */
 
-int (*get_buildin_func(char *c))(int argc, char **args, char ***e)
+int (*get_buildin_func(char *c))(int ac, char **as, char ***e, int s)
 {
 	buildin_t b_in[] = {
 		{"exit", my_exit},
