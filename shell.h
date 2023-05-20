@@ -82,5 +82,7 @@ int my_cd(int argc, char **args, char ***e, int s);
 int _isdigit(int c);
 int _atoi(char *s);
 void print_prompt(void);
+int print_cmd_not_found(char **argv);
+int print_error(char **argv, char *desc, int r);
 
 #endif /* SHELL_H */

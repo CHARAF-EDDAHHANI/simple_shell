@@ -52,10 +52,17 @@ int my_exit(int argc, char **args, char ***e, int s)
 int my_env(int argc, char **args, char ***e, int s)
 {
 	char **envp = *e;
+	char *error;
 
-	(void)argc;
 	(void)args;
 	(void)s;
+	if (argc > 2)
+	{
+		error = build_error2(args[0], "Usage : env");
+		write(STDERR_FILENO, error, _strlen(error));
+		write(STDOUT_FILENO, "\n", 1);
+		return (1);
+	}
 	while (*envp)
 	{
 		write(STDOUT_FILENO, *envp, _strlen(*envp));
@@ -80,7 +87,7 @@ int set_env(int argc, char **args, char ***e, int s)
 	char *error;
 
 	(void)s;
-	if (argc != 4)
+	if (argc > 4)
 	{
 		error = build_error(args[0], "setenv", "Usage : setenv VARIABLE VALUE");
 		write(STDERR_FILENO, error, _strlen(error));
@@ -134,44 +141,44 @@ int unset_env(int argc, char **args, char ***e, int s)
  */
 int my_cd(int argc, char **args, char ***e, __attribute__((unused)) int s)
 {
-	char *new_dir, *old, *error;
+	char *new_dir, *old, *error, buf[1024];
 	int retVal = 0;
 	envNode_t *h;
-	char buf[1024];
 
 	if (argc > 3)
-	{
-		error = build_error(args[0], "unsetenv", "Usage : cd [DIRECTORY]");
-		write(STDERR_FILENO, error, _strlen(error));
-		return (1);
-	}
+		return (print_error(args, "Usage : cd [DIRECTORY]", 1));
 	h = convert_to_list(*e);
 	if (args[2] == NULL) /* should be interpreted as cd $HOME */
-		new_dir = _getenv2("HOME", *e);
+	{
+		new_dir = get_node_by_name(h, "HOME");
+		if (!new_dir)
+			return (print_error(args, "HOME not set", 1));
+	}
 	else if (_strcmp(args[2], "-") == 0)
+	{
 		new_dir = get_node_by_name(h, "OLDPWD");
+		if (!new_dir)
+			return (print_error(args, "OLDPWD not set", 1));
+	}
 	else
 		new_dir = args[2];
 	old = _strdup(get_node_by_name(h, "PWD"));
 	retVal = chdir(new_dir);
-	if (retVal == -1)
+	if (retVal == -1 && errno == EACCES)
 	{
-		error = build_error(args[0], "cd", "Error - chgt the working directory");
-		write(STDERR_FILENO, error, _strlen(error));
-		return (1);
+		error = malloc(sizeof(char) * (_strlen(new_dir) + 13));
+		if (!error)
+			return (print_error(args, "Not enough space", 1));
+		_strcpy(error, "can't cd to ");
+		_strcat(error, new_dir);
+		return (print_error(args, error, 2));
 	}
+	else if (retVal == -1 && errno != EACCES)
+		return (print_error(args, "Error - chgt the working directory", 1));
 	if (old == NULL || (getcwd(buf, 1024)) == NULL)
-	{
-		error = build_error(args[0], "cd", "Error - getting the current directory");
-		write(STDERR_FILENO, error, _strlen(error));
-		return (1);
-	}
+		return (print_error(args, "Error - getting the current directory", 1));
 	if (_setenv(&h, "PWD", getcwd(buf, 1024), 1) || _setenv(&h, "OLDPWD", old, 1))
-	{
-		error = build_error(args[0], "cd", "Error - setting PWD & OLDPWD");
-		write(STDERR_FILENO, error, _strlen(error));
-		return (1);
-	}
+		return (print_error(args, "Error - setting PWD & OLDPWD", 1));
 	*e = list_to_environ(h);
 	return (0);
 }

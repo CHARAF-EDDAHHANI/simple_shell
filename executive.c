@@ -46,7 +46,7 @@ int execmd(int argc, char **argv, char ***e, int s)
 			return (WEXITSTATUS(st));
 		}
 		else
-			perror(build_error2(argv[0], "Error _which"));
+			return (print_cmd_not_found(argv));
 	}
 	return (0);
 }
@@ -115,4 +115,18 @@ void sigign(int signal)
 {
 	if (signal == SIGINT)
 		write(STDIN_FILENO, "\n$ ", 3);
+}
+
+/**
+ * print_cmd_not_found - prints command not found error
+ * @argv: an array of pointers to arguments
+ * Return: 127
+ */
+int print_cmd_not_found(char **argv)
+{
+	char *error;
+
+	error = build_error(argv[0], argv[1], "command not found");
+	write(STDERR_FILENO, error, _strlen(error));
+	return (127);
 }

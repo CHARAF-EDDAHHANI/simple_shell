@@ -14,25 +14,23 @@ envNode_t *add_node_end(envNode_t **head, char *name, char *value)
 	envNode_t *current = *head;
 
 	while (current && current->next != NULL)
-	{
 		current = current->next;
-	}
 	new = malloc(sizeof(envNode_t));
 	if (!new)
-	{
 		return (NULL);
-	}
 	new->name = _strdup(name);
 	if (!new->name)
 	{
-		free(new);
+		free_node(new);
 		return (NULL);
 	}
-	new->value = _strdup(value);
+	if (value)
+		new->value = _strdup(value);
+	else
+		new->value = _strdup("");
 	if (!new->value)
 	{
-		free(new->name);
-		free(new);
+		free_node(new);
 		return (NULL);
 	}
 	new->next = NULL;
@@ -59,7 +57,7 @@ envNode_t *convert_to_list(char **envp)
 		var = _strdup(*envp);
 		if (!var)
 		{
-			perror("Not enough space");
+			perror("Error - Not enough space");
 			return (NULL);
 		}
 		name = strtok(var, "=");
@@ -93,11 +91,14 @@ int _setenv(envNode_t **head, char *name, char *value, int overwrite)
 			if (overwrite)
 			{
 				free(current->value);
-				current->value = _strdup(value);
+				if (value)
+					current->value = _strdup(value);
+				else
+					current->value = _strdup("");
 				if (!current->value)
 				{
-					perror("Not enough space");
-					exit(-1);
+					perror("setenv - Not enough space");
+					return (1);
 				}
 			}
 			return (0);
@@ -108,7 +109,7 @@ int _setenv(envNode_t **head, char *name, char *value, int overwrite)
 	if (add_node_end(head, name, value) == NULL)
 	{
 		perror("Error : setenv");
-		exit(-1);
+		return (1);
 	}
 	return (0);
 }
@@ -131,8 +132,8 @@ char **list_to_environ(envNode_t *head)
 	new_environ = malloc(sizeof(char *) * (size + 1));
 	if (!new_environ)
 	{
-		perror("Not enough space");
-		exit(EXIT_FAILURE);
+		perror("Error - Not enough space");
+		return (NULL);
 	}
 	/* stored the name-value pairs to the new environ array */
 	while (current != NULL)
@@ -143,7 +144,7 @@ char **list_to_environ(envNode_t *head)
 		if (env_var == NULL)
 		{
 			perror("Error : Not enough space");
-			exit(EXIT_FAILURE);
+			return (NULL);
 		}
 		build_env_var(env_var, current->name, current->value);
 		new_environ[i] = env_var;

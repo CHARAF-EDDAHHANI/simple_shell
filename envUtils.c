@@ -19,8 +19,10 @@ void build_env_var(char *env_var, char *name, char *value)
  */
 void free_node(envNode_t *node)
 {
-	free(node->name);
-	free(node->value);
+	if (node->name)
+		free(node->name);
+	if (node->value)
+		free(node->value);
 	free(node);
 }
 
