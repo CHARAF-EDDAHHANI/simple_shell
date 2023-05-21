@@ -26,7 +26,8 @@ int print_error(char **argv, char *desc, int r)
 }
 
 /**
- *
+ * ignore_comments - ignore the comments
+ * @lineptr : the giving string
  */
 void ignore_comments(char *lineptr)
 {
