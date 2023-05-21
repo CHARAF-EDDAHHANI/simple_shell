@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 	int status = 0, len = 0;
 
 	(void)argc;
+	signal(SIGINT, sigign);
 	while (1)
 	{
 		print_prompt();
