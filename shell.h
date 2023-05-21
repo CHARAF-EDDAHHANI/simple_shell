@@ -84,5 +84,6 @@ int _atoi(char *s);
 void print_prompt(void);
 int print_cmd_not_found(char **argv);
 int print_error(char **argv, char *desc, int r);
+void ignore_comments(char *lineptr);
 
 #endif /* SHELL_H */

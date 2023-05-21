@@ -24,3 +24,20 @@ int print_error(char **argv, char *desc, int r)
 	write(STDERR_FILENO, error, _strlen(error));
 	return (r);
 }
+
+/**
+ *
+ */
+void ignore_comments(char *lineptr)
+{
+	int i;
+
+	for (i = 0; lineptr[i] != '\0'; i++)
+	{
+		if (lineptr[i] == '#')
+		{
+			lineptr[i] = '\0';
+			return;
+		}
+	}
+}

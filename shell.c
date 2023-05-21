@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 				exit(status);
 			return (0);
 		}
+		ignore_comments(lineptr);
 		argv = parse_input(argv[0], lineptr);
 		len = array_len(argv);
 		if (len == 1)
