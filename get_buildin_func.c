@@ -14,13 +14,14 @@ int (*get_buildin_func(char *c))(int ac, char **as, char ***e, int s)
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
 		{"cd", my_cd},
+		{"echo", my_echo},
 		{NULL, NULL}
 	};
 	int i;
 
 	i = 0;
 
-	while (i < 5)
+	while (i < 6)
 	{
 		if (!_strcmp(b_in[i].cmd, c))
 			return (b_in[i].func);

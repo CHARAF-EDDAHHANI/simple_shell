@@ -69,3 +69,44 @@ char **parse_input(char *execName, char *lineptr)
 	free(cplineptr);
 	return (av);
 }
+
+/**
+ * parse_multi_cmd - parse line with ;
+ * @lineptr: the giving string
+ * Return: an array of pointers or NULL
+ */
+char **parse_multi_cmd(char *lineptr)
+{
+	char *copyline, *token;
+	int nbrTokens = 0, i = 0;
+	const char *delim = ";";
+	char **cmds;
+
+	copyline = _strdup(lineptr);
+	if (!copyline)
+		return (NULL);
+	nbrTokens = count_token(copyline, delim);
+	cmds = malloc(sizeof(char *) * (nbrTokens + 1));
+	if (!cmds)
+	{
+		free(copyline);
+		return (NULL);
+	}
+	token = strtok(lineptr, delim);
+	while (token != NULL)
+	{
+		cmds[i] = _strdup(token);
+		if (!cmds[i])
+		{
+			while (i > 0)
+				free(cmds[--i]);
+			free(cmds);
+			free(copyline);
+		}
+		token = strtok(NULL, delim);
+		i++;
+	}
+	cmds[i] = NULL;
+	free(copyline);
+	return (cmds);
+}

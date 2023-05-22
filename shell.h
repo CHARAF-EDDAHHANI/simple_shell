@@ -85,5 +85,7 @@ void print_prompt(void);
 int print_cmd_not_found(char **argv);
 int print_error(char **argv, char *desc, int r);
 void ignore_comments(char *lineptr);
+int my_echo(int argc, char **args, char ***e, int s);
+char **parse_multi_cmd(char *lineptr);
 
 #endif /* SHELL_H */

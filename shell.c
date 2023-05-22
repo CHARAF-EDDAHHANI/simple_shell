@@ -13,8 +13,8 @@ int main(int argc, char **argv)
 	ssize_t nbchar = 0;
 	size_t n = 0;
 	char *lineptr = NULL;
-	char **e = environ;
-	int status = 0, len = 0;
+	char **e = environ, **cmds;
+	int status = 0, len = 0, i;
 
 	(void)argc;
 	signal(SIGINT, sigign);
@@ -32,11 +32,15 @@ int main(int argc, char **argv)
 			return (0);
 		}
 		ignore_comments(lineptr);
-		argv = parse_input(argv[0], lineptr);
-		len = array_len(argv);
-		if (len == 1)
-			continue;
-		status = execmd(len, argv, &e, status);
+		cmds = parse_multi_cmd(lineptr);
+		for (i = 0; cmds[i] != NULL; i++)
+		{
+			argv = parse_input(argv[0], cmds[i]);
+			len = array_len(argv);
+			if (len == 1)
+				continue;
+			status = execmd(len, argv, &e, status);
+		}
 	}
 	free(lineptr);
 	return (0);
