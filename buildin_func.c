@@ -28,7 +28,7 @@ int my_exit(int argc, char **args, char ***e, int s)
 				continue;
 			if (!_isdigit(args[2][i]))
 			{
-				error = build_error2(args[0], "exit : numeric argument required");
+				error = build_error2(args[0], "exit : numeric argument required\n");
 				write(STDERR_FILENO, error, _strlen(error));
 				return (2);
 			}
@@ -87,7 +87,7 @@ int set_env(int argc, char **args, char ***e, int s)
 	char *error;
 
 	(void)s;
-	if (argc > 4)
+	if (argc < 3 || argc > 4)
 	{
 		error = build_error(args[0], "setenv", "Usage : setenv VARIABLE VALUE");
 		write(STDERR_FILENO, error, _strlen(error));
@@ -99,6 +99,7 @@ int set_env(int argc, char **args, char ***e, int s)
 	{
 		error = build_error(args[0], "Error", "setenv");
 		write(STDERR_FILENO, error, _strlen(error));
+		free(error);
 		return (1);
 	}
 	*e = list_to_environ(env);

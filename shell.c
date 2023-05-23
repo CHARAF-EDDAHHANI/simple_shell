@@ -36,11 +36,14 @@ int main(int argc, char **argv)
 		for (i = 0; cmds[i] != NULL; i++)
 		{
 			argv = parse_input(argv[0], cmds[i]);
+			if (replace_variables(argv, e, status) != 0)
+				return (1);
 			len = array_len(argv);
 			if (len == 1)
 				continue;
 			status = execmd(len, argv, &e, status);
 		}
+		free(cmds);
 	}
 	free(lineptr);
 	return (0);

@@ -128,5 +128,6 @@ int print_cmd_not_found(char **argv)
 
 	error = build_error(argv[0], argv[1], "command not found");
 	write(STDERR_FILENO, error, _strlen(error));
+	free(error);
 	return (127);
 }

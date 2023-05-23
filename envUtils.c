@@ -44,3 +44,20 @@ char *get_node_by_name(envNode_t *head, char *name)
 	}
 	return (NULL);
 }
+
+/**
+ * free_node_list - free list
+ * @head: a pointer to the first node
+ */
+void free_node_list(envNode_t *head)
+{
+	envNode_t *current = head;
+
+	while (current && current->next)
+	{
+		current = current->next;
+		free_node(head);
+		head = current;
+	}
+	free_node(head);
+}
