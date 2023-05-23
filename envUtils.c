@@ -6,6 +6,7 @@
  * @name: the name of the environment variable
  * @value: the value of the environment variable
  */
+
 void build_env_var(char *env_var, char *name, char *value)
 {
 	_strcpy(env_var, name);
