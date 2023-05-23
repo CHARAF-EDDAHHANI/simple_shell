@@ -18,6 +18,7 @@ void build_env_var(char *env_var, char *name, char *value)
  * free_node - frees struct envNode element
  * @node: a pointer to the node
  */
+
 void free_node(envNode_t *node)
 {
 	if (node->name)
