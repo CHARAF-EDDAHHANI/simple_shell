@@ -27,6 +27,7 @@ char *_strchr(char *str, char c)
  * @n: the number of character
  * Return: the pointer to the concatenate string
  */
+
 char *_strncat(char *dest, char *src, size_t n)
 {
 	size_t d_len = 0, i;
@@ -45,6 +46,7 @@ char *_strncat(char *dest, char *src, size_t n)
  * @n: nbr of characters to be copied
  * Return: a pointer to copied memory
  */
+
 char *_memcpy(char *dest, char *src, size_t n)
 {
 	char *newDest = dest;
