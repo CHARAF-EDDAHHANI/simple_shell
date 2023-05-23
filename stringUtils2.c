@@ -6,6 +6,7 @@
  * @c: the character to be located
  * Return: a pointer to the matched character or NULL if not found
  */
+
 char *_strchr(char *str, char c)
 {
 	if (!str)
