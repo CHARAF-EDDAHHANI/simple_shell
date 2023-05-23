@@ -63,6 +63,7 @@ char *_memcpy(char *dest, char *src, size_t n)
  * @new_size: new size of memory
  * Return: a pointer to the new allocated memory
  */
+
 void *_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void *newptr;
