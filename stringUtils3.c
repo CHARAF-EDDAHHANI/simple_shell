@@ -6,6 +6,7 @@
  * @dest: a pointer to the destination string
  * Return: pointer to the destination buffer
  */
+
 char *_strcpy(char *dest, char *src)
 {
 	int srclen = 0, i;
