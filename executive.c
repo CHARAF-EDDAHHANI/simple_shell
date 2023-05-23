@@ -58,6 +58,7 @@ int execmd(int argc, char **argv, char ***e, int s)
  * @errorDesc: the error description
  * Return: The error message
  */
+
 char *build_error(char *exe, char *cmd, char *errorDesc)
 {
 	char *error;
