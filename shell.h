@@ -30,6 +30,7 @@ typedef struct buildin
  * @value: the envirornment value
  * @next: a pointer to the next node
  */
+
 typedef struct envNode
 {
 	char *name;
