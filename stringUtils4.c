@@ -5,6 +5,7 @@
  * @s: string to convert
  * Return: int found or 0
  */
+
 int _atoi(char *s)
 {
 	unsigned int result = 0;
