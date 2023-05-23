@@ -17,6 +17,7 @@
  * @cmd: The build-in command
  * @func: the function associated
  */
+
 typedef struct buildin
 {
 	char *cmd;
