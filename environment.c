@@ -5,6 +5,7 @@
  * @name: the environment variable name
  * Return: the environment variable value
  */
+
 char *_getenv(const char *name)
 {
 	char **variable;
@@ -61,6 +62,7 @@ char *_getenv2(const char *name, char **e)
  * printDirPaths - prints dir Paths contains in PATH variable
  * @path: the value of PATH environment variable
  */
+
 void printDirPaths(char *path)
 {
 	char **dirPaths;
