@@ -52,6 +52,7 @@ void ignore_comments(char *lineptr)
  * @upper_o_n: indicates if output upper od lower case
  * Return: the conversion string
  */
+
 char *convert_number(int n, int base, int upper_o_n)
 {
 	static char *base_digits;
