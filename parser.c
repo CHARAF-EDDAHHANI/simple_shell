@@ -29,11 +29,15 @@ int count_token(char *lineptr, const char *delim)
 char **parse_input(char *lineptr)
 {
 	char **av;
-	char *token = NULL;
+	char *token = NULL, *copy;
 	int nbrTokens = 0, i = 0, j;
 	const char *delim = " \t\n";
 
-	nbrTokens = count_token(lineptr, delim);
+	copy = malloc(sizeof(char) * (_strlen(lineptr) + 1));
+	if (copy == NULL)
+		return (NULL);
+	_strcpy(copy, lineptr);
+	nbrTokens = count_token(copy, delim);
 	av = malloc(sizeof(char *) * (nbrTokens + 1));
 	if (!av)
 		return (NULL);
@@ -46,12 +50,14 @@ char **parse_input(char *lineptr)
 			for (j = 0; j < i; j++)
 				free(av[j]);
 			free(av);
+			free(copy);
 			return (NULL);
 		}
 		_strcpy(av[i], token);
 		token = strtok(NULL, delim);
 	}
 	av[i] = NULL;
+	free(copy);
 	return (av);
 }
 
