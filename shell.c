@@ -13,10 +13,12 @@ int main(int argc, char **argv)
 	ssize_t nbchar = 0;
 	size_t n = 0;
 	char *lineptr = NULL;
-	char **e = environ, **cmds;
-	int status = 0, len = 0, i;
+	char **e = environ;
+	int len = 0;
+	char **av = NULL;
 
 	(void)argc;
+	(void)argv;
 	signal(SIGINT, sigign);
 	while (1)
 	{
@@ -25,27 +27,18 @@ int main(int argc, char **argv)
 		if (nbchar == -1)
 		{
 			free(lineptr);
-			if (isatty(STDIN_FILENO) == 1)
-				write(STDOUT_FILENO, "\n", 1);
-			if (status != 0)
-				exit(status);
 			return (0);
 		}
-		ignore_comments(lineptr);
-		cmds = parse_multi_cmd(lineptr);
-		for (i = 0; cmds[i] != NULL; i++)
+		av = parse_input(lineptr);
+		len = array_len(av);
+		if (len == 0)
 		{
-			argv = parse_input(argv[0], cmds[i]);
-			if (replace_variables(argv, e, status) != 0)
-				return (1);
-			len = array_len(argv);
-			if (len == 1)
-				continue;
-			status = execmd(len, argv, &e, status);
+			free_args(av);
+			continue;
 		}
-		free(cmds);
+		execmd(argv[0], av, e);
+		free_args(av);
 	}
-	free(lineptr);
 	return (0);
 }
 
