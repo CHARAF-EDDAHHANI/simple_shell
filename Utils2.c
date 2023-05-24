@@ -34,6 +34,7 @@ char *convert_number(int n, int base, int upper_o_n)
  * @s: the previous status
  * Return: 0 Success
  */
+
 int replace_variables(char **args, char **e, int s)
 {
 	int i;
