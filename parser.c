@@ -24,9 +24,11 @@ int count_token(char *lineptr, const char *delim)
 /**
  * parse_input - splits line command into arguments
  * @lineptr: the line command
+ * @e: an array of environnement variables
+ * @s: the previous status
  * Return: a pointer of pointers to arguments
  */
-char **parse_input(char *lineptr)
+char **parse_input(char *lineptr, char **e, int s)
 {
 	char **av;
 	char *token = NULL, *copy;
@@ -58,6 +60,7 @@ char **parse_input(char *lineptr)
 		token = strtok(NULL, delim);
 	}
 	av[i] = NULL;
+	replace_variables(av, e, s);
 	free(copy);
 	return (av);
 }

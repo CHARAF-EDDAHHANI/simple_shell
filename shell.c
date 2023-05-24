@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 			free(lineptr);
 			exit(0);
 		}
-		av = parse_input(lineptr);
+		av = parse_input(lineptr, e, status);
 		len = array_len(av);
 		if (len == 0)
 		{

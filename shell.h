@@ -16,7 +16,7 @@
 extern char **environ;
 
 /**
- * struct envNode - Struct environment variable
+ * struct Node - Struct environment variable
  * @name: the environment name
  * @value: the envirornment value
  * @next: a pointer to the next node
@@ -59,7 +59,7 @@ int array_len(char **args);
 int _atoi(char *s);
 int _isdigit(int c);
 void sigign(int signal);
-char **parse_input(char *lineptr);
+char **parse_input(char *lineptr, char **e, int s);
 void print_prompt(void);
 void free_args(char **av);
 int execmd(char *exe, char **av, char **e);
@@ -71,12 +71,12 @@ int print_cmd_not_found(char *exe, char **av);
 void execute_exit(int status, char **av, char *line);
 void ignore_comments(char *lineptr);
 void free_node(Node_t *node);
+int replace_variables(char **args, char **e, int s);
 
 /* Buildin functions */
 int my_env(char *exe, int ac, char **as, char **e, int s);
 int my_exit(char *exe, int ac, char **as, char **e, int s);
-int (*get_buildin_func(char *c))(char *exe, int ac, char **av,
-		char **e, int s);
+int (*get_buildin_func(char *c))(char *x, int a, char **v, char **e, int s);
 
 
 
