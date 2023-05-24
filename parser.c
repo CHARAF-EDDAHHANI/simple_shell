@@ -33,6 +33,7 @@ char **parse_input(char *lineptr)
 	int nbrTokens = 0, i = 0, j;
 	const char *delim = " \t\n";
 
+	ignore_comments(lineptr);
 	copy = malloc(sizeof(char) * (_strlen(lineptr) + 1));
 	if (copy == NULL)
 		return (NULL);

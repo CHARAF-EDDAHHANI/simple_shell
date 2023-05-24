@@ -69,6 +69,8 @@ char *_which(char *cmd, char *envPath);
 char *_getenv(const char *name, char **e);
 int print_cmd_not_found(char *exe, char **av);
 void execute_exit(int status, char **av, char *line);
+void ignore_comments(char *lineptr);
+void free_node(Node_t *node);
 
 /* Buildin functions */
 int my_env(char *exe, int ac, char **as, char **e, int s);

@@ -14,6 +14,7 @@
 int my_exit(char *exe, int ac, char **as, char **e, int s)
 {
 	int status = 200, i;
+	char *error;
 
 	(void)e;
 	if (ac > 2)
@@ -29,7 +30,12 @@ int my_exit(char *exe, int ac, char **as, char **e, int s)
 				continue;
 			if (!_isdigit(as[1][i]))
 			{
-				print_error(exe, "exit : numeric argument required");
+				error = malloc(sizeof(char) * (_strlen(as[1]) + 35));
+				_strcpy(error, "exit: ");
+				_strcat(error, as[1]);
+				_strcat(error, ": numeric argument required");
+				print_error(exe, error);
+				free(error);
 				return (2);
 			}
 		}
