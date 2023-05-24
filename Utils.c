@@ -65,13 +65,15 @@ char *_getenv(const char *name, char **e)
  * execute_exit - launch exit command
  * @status: the exit status
  * @av: an array of arguments
+ * @cmd: an array of commands
  * @line: the line
  */
 
-void execute_exit(int status, char **av, char *line)
+void execute_exit(int status, char **av, char *line, char **cmd)
 {
 	free_args(av);
 	free(line);
+	free_args(cmd);
 	if (status == 200)
 		exit(0);
 	exit(status);
