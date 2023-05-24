@@ -38,7 +38,7 @@ char *_getenv(const char *name, char **e)
 	char *variable, *token, *path;
 	char **envp = e;
 
-	while (envp)
+	while (*envp)
 	{
 		variable = malloc(sizeof(char) * (_strlen(*envp) + 1));
 		if (variable == NULL)

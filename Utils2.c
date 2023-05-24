@@ -66,7 +66,6 @@ int replace_variables(char **args, char **e, int s)
 				continue;
 			}
 			args[i] = _strdup("");
-			free(value);
 		}
 	}
 	return (0);
