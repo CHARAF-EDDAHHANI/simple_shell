@@ -6,6 +6,7 @@
  * @cmd: the giving command
  * @path: the command path
  */
+
 void buildPath(char *dirPath, char *cmd, char *path)
 {
 	_strcpy(path, dirPath);
