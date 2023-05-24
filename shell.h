@@ -24,9 +24,9 @@ extern char **environ;
 
 typedef struct Node
 {
-		char *name;
-			char *value;
-				struct Node *next;
+	char *name;
+	char *value;
+	struct Node *next;
 } Node_t;
 
 
@@ -53,6 +53,9 @@ void print_prompt(void);
 void free_args(char **av);
 int execmd(char *exe, char **av, char **e);
 void print_error(char *exe, char *desc);
-
+void buildPath(char *dirPath, char *cmd, char *path);
+char *_which(char *cmd, char *envPath);
+char *_getenv(const char *name, char **e);
+int print_cmd_not_found(char *exe, char **av);
 
 #endif

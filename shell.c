@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 	size_t n = 0;
 	char *lineptr = NULL;
 	char **e = environ;
-	int len = 0;
+	int len = 0, status = 0;
 	char **av = NULL;
 
 	(void)argc;
@@ -24,10 +24,12 @@ int main(int argc, char **argv)
 	{
 		print_prompt();
 		nbchar = getline(&lineptr, &n, stdin);
-		if (nbchar == -1)
+		if (nbchar <= 0)
 		{
 			free(lineptr);
-			return (0);
+			if (status != 0)
+				exit(status);
+			exit(0);
 		}
 		av = parse_input(lineptr);
 		len = array_len(av);
@@ -36,7 +38,7 @@ int main(int argc, char **argv)
 			free_args(av);
 			continue;
 		}
-		execmd(argv[0], av, e);
+		status = execmd(argv[0], av, e);
 		free_args(av);
 	}
 	return (0);
