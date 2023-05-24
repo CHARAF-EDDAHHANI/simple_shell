@@ -16,11 +16,11 @@
 extern char **environ;
 
 /**
- *  * struct envNode - Struct environment variable
- *   * @name: the environment name
- *    * @value: the envirornment value
- *     * @next: a pointer to the next node
- *      */
+ * struct envNode - Struct environment variable
+ * @name: the environment name
+ * @value: the envirornment value
+ * @next: a pointer to the next node
+ */
 
 typedef struct Node
 {
