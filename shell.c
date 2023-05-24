@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 	char **e = environ;
 	int len = 0, status = 0;
 	char **av = NULL;
+	int (*p_func)(char *exe, int ac, char **as, char **e, int st);
 
 	(void)argc;
 	(void)argv;
@@ -27,8 +28,6 @@ int main(int argc, char **argv)
 		if (nbchar <= 0)
 		{
 			free(lineptr);
-			if (status != 0)
-				exit(status);
 			exit(0);
 		}
 		av = parse_input(lineptr);
@@ -38,8 +37,17 @@ int main(int argc, char **argv)
 			free_args(av);
 			continue;
 		}
-		status = execmd(argv[0], av, e);
+		p_func = get_buildin_func(av[0]);
+		if (p_func != NULL)
+		{
+			status = p_func(argv[0], len, av, e, status);
+			if (status != 0)
+				execute_exit(status, av, lineptr);
+		}
+		else
+			status = execmd(argv[0], av, e);
 		free_args(av);
+
 	}
 	return (0);
 }

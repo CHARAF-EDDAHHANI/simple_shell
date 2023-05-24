@@ -60,3 +60,19 @@ char *_getenv(const char *name, char **e)
 	}
 	return (NULL);
 }
+
+/**
+ * execute_exit - launch exit command
+ * @status: the exit status
+ * @av: an array of arguments
+ * @line: the line
+ */
+
+void execute_exit(int status, char **av, char *line)
+{
+	free_args(av);
+	free(line);
+	if (status == 200)
+		exit(0);
+	exit(status);
+}

@@ -29,6 +29,17 @@ typedef struct Node
 	struct Node *next;
 } Node_t;
 
+/**
+ * struct buildin - Struct build-in commands
+ * @cmd: The build in command
+ * @func: the function associated
+ */
+typedef struct buildin
+{
+	char *cmd;
+	int (*func)(char *exe, int ac, char **av, char **e, int s);
+} buildin_t;
+
 
 int _strlen(char *str);
 int isDelim(char c, const char *delim);
@@ -57,5 +68,14 @@ void buildPath(char *dirPath, char *cmd, char *path);
 char *_which(char *cmd, char *envPath);
 char *_getenv(const char *name, char **e);
 int print_cmd_not_found(char *exe, char **av);
+void execute_exit(int status, char **av, char *line);
+
+/* Buildin functions */
+int my_env(char *exe, int ac, char **as, char **e, int s);
+int my_exit(char *exe, int ac, char **as, char **e, int s);
+int (*get_buildin_func(char *c))(char *exe, int ac, char **av,
+		char **e, int s);
+
+
 
 #endif
