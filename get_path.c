@@ -6,6 +6,7 @@
  * @cmd: the giving command
  * @path: the command path
  */
+
 void buildPath(char *dirPath, char *cmd, char *path)
 {
 	_strcpy(path, dirPath);
@@ -21,6 +22,7 @@ void buildPath(char *dirPath, char *cmd, char *path)
  * @envPath: the value of PATH environnement variable
  * Return: the path of the command or NULL if that not exists
  */
+
 char *_which(char *cmd, char *envPath)
 {
 	char *path, *token = NULL, *copyPath;

@@ -107,6 +107,7 @@ void *_realloc(void *ptr, size_t old_size, size_t new_size)
  * @n: the new size
  * Return: 1 (Success), 0 otherwize
  */
+
 int reallocate(char **lineptr, ssize_t n)
 {
 	char *newLineptr;

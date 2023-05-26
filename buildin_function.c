@@ -30,10 +30,10 @@ int my_exit(char *exe, int ac, char **as, char **e, int s)
 			{
 				error = malloc(sizeof(char) * (_strlen(as[1]) +
 						       _strlen(level) + 27));
-				_strcpy(error, convert_number(_atoi(level),
+				_strcpy(error, convert_number(_atoi(level) + 1,
 							10, 0));
 				_strcat(error, ": exit: ");
-				_strcat(error, "illegal number: ");
+				_strcat(error, "Illegal number: ");
 				_strcat(error, as[1]);
 				print_error(exe, error);
 				free(level);

@@ -1,5 +1,6 @@
 #include "shell.h"
 
+
 /**
  * get_buildin_func - get build in function
  * @c: the giving command
