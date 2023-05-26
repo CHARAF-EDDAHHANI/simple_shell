@@ -73,6 +73,7 @@ void ignore_comments(char *lineptr);
 void free_node(Node_t *node);
 int replace_variables(char **args, char **e, int s);
 char **parse_multi_cmd(char *lineptr);
+char *convert_number(int n, int base, int upper_o_n);
 
 /* Buildin functions */
 int my_env(char *exe, int ac, char **as, char **e, int s);
