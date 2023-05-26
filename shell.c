@@ -25,6 +25,8 @@ int main(__attribute__((unused)) int argc, char **argv)
 		if (nbchar <= 0)
 		{
 			free(lineptr);
+			if (status != 0)
+				exit(status);
 			exit(0);
 		}
 		cmd = parse_multi_cmd(lineptr);
