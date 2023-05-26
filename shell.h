@@ -38,7 +38,7 @@ typedef struct Node
 typedef struct buildin
 {
 	char *cmd;
-	int (*func)(char *exe, int ac, char **av, char **e, int s);
+	int (*func)(char *exe, int ac, char **av, char **e, int s, int l);
 } buildin_t;
 
 
@@ -63,7 +63,7 @@ void sigign(int signal);
 char **parse_input(char *lineptr, char **e, int s);
 void print_prompt(void);
 void free_args(char **av);
-int execmd(char *exe, char **av, char **e);
+int execmd(char *exe, char **av, char **e, int *flag, int *lvl);
 void print_error(char *exe, char *desc);
 void buildPath(char *dirPath, char *cmd, char *path);
 char *_which(char *cmd, char *envPath);
@@ -77,9 +77,9 @@ char **parse_multi_cmd(char *lineptr);
 char *convert_number(int n, int base, int upper_o_n);
 
 /* Buildin functions */
-int my_env(char *exe, int ac, char **as, char **e, int s);
-int my_exit(char *exe, int ac, char **as, char **e, int s);
-int (*get_buildin_func(char *c))(char *x, int a, char **v, char **e, int s);
+int my_env(char *exe, int ac, char **as, char **e, int s, int l);
+int my_exit(char *exe, int ac, char **as, char **e, int s, int l);
+int (*get_buildin_func(char *c))(char *x, int a, char **v, char **e, int s, int l);
 
 
 

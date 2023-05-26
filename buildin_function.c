@@ -11,12 +11,13 @@
  */
 
 
-int my_exit(char *exe, int ac, char **as, char **e, int s)
+int my_exit(char *exe, int ac, char **as, char **e, int s, int l)
 {
 	int status = 200, i;
 	char *error;
-	char *level = _getenv("SHLVL", e);
+	char *level = convert_number(l, 10, 0);
 
+	(void)e;
 	if (ac > 2)
 	{
 		print_error(exe, "Usage: exit status");
@@ -30,13 +31,11 @@ int my_exit(char *exe, int ac, char **as, char **e, int s)
 			{
 				error = malloc(sizeof(char) * (_strlen(as[1]) +
 						       _strlen(level) + 27));
-				_strcpy(error, convert_number(_atoi(level) + 1,
-							10, 0));
+				_strcpy(error, level);
 				_strcat(error, ": exit: ");
 				_strcat(error, "Illegal number: ");
 				_strcat(error, as[1]);
 				print_error(exe, error);
-				free(level);
 				free(error);
 				return (2);
 			}
@@ -45,7 +44,6 @@ int my_exit(char *exe, int ac, char **as, char **e, int s)
 	}
 	else if (s != 0)
 		status = s;
-	free(level);
 	return (status);
 }
 
@@ -60,12 +58,13 @@ int my_exit(char *exe, int ac, char **as, char **e, int s)
  * Return: 0 success
  */
 
-int my_env(char *exe, int ac, char **as, char **e, int s)
+int my_env(char *exe, int ac, char **as, char **e, int s, int l)
 {
 	char **envp = e;
 
 	(void)as;
 	(void)s;
+	(void)l;
 	if (ac > 1)
 	{
 		print_error(exe, "Usage : env");

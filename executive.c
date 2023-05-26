@@ -19,7 +19,7 @@ void sigign(int signal)
  * Return: status code
  */
 
-int execmd(char *exe, char **av, char **e)
+int execmd(char *exe, char **av, char **e, int *f, int *l)
 {
 	pid_t child;
 	int st;
@@ -27,6 +27,8 @@ int execmd(char *exe, char **av, char **e)
 
 	if (av)
 	{
+		if (*f == 1)
+			(*l)++, *f = 0;
 		path = _getenv("PATH", e);
 		if (path != NULL || access(av[0], F_OK) == 0)
 			cmd = _which(av[0], path);
