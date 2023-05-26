@@ -48,12 +48,17 @@ char *_getenv(const char *name, char **e)
 		if (token != NULL && _strcmp(token, name) == 0)
 		{
 			token = strtok(NULL, "\0");
-			path = malloc(sizeof(char) * (_strlen(token) + 1));
-			if (path == NULL)
-				return (NULL);
-			_strcpy(path, token);
+			if (token != NULL)
+			{
+				path = malloc(sizeof(char) * (_strlen(token) + 1));
+				if (path == NULL)
+					return (NULL);
+				_strcpy(path, token);
+				free(variable);
+				return (path);
+			}
 			free(variable);
-			return (path);
+			return (NULL);
 		}
 		envp++;
 		free(variable);

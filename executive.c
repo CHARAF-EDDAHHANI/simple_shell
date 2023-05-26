@@ -23,12 +23,13 @@ int execmd(char *exe, char **av, char **e)
 {
 	pid_t child;
 	int st;
-	char *path, *cmd;
+	char *path, *cmd = NULL;
 
 	if (av)
 	{
 		path = _getenv("PATH", e);
-		cmd = _which(av[0], path);
+		if (path != NULL || access(av[0], F_OK) == 0)
+			cmd = _which(av[0], path);
 		if (cmd)
 		{
 			child = fork();
