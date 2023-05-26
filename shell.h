@@ -68,7 +68,7 @@ void print_error(char *exe, char *desc);
 void buildPath(char *dirPath, char *cmd, char *path);
 char *_which(char *cmd, char *envPath);
 char *_getenv(const char *name, char **e);
-int print_cmd_not_found(char *exe, char **av);
+int print_cmd_not_found(char *exe, char **av, int l);
 void execute_exit(int status, char **av, char *line, char **cmd);
 void ignore_comments(char *lineptr);
 void free_node(Node_t *node);
@@ -79,7 +79,7 @@ char *convert_number(int n, int base, int upper_o_n);
 /* Buildin functions */
 int my_env(char *exe, int ac, char **as, char **e, int s, int l);
 int my_exit(char *exe, int ac, char **as, char **e, int s, int l);
-int (*get_buildin_func(char *c))(char *x, int a, char **v, char **e, int s, int l);
+int (*get_func(char *c))(char *x, int a, char **v, char **e, int s, int l);
 
 
 

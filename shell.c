@@ -27,17 +27,16 @@ int main(__attribute__((unused)) int argc, char **argv)
 			free(lineptr);
 			exit(status);
 		}
-		flag = 1;
-		cmd = parse_multi_cmd(lineptr);
+		flag = 1, cmd = parse_multi_cmd(lineptr);
 		for (i = 0; cmd[i]; i++)
 		{
 			av = parse_input(cmd[i], e, status);
 			len = array_len(av);
 			if (len > 0)
 			{
-				p_func = get_buildin_func(av[0]);
+				p_func = get_func(av[0]);
 				if (p_func != NULL)
-				{	
+				{
 					lvl++;
 					status = p_func(argv[0], len, av, e, status, lvl);
 					if (status != 0)

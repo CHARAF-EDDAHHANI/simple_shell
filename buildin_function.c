@@ -7,6 +7,7 @@
  * @as: a pointer of pointers to arguments
  * @e: a pointer of environment variables
  * @s: the status of the previous command
+ * @l: line number
  * Return: 0 success
  */
 
@@ -55,6 +56,7 @@ int my_exit(char *exe, int ac, char **as, char **e, int s, int l)
  * @as: a pointer of pointers to arguments
  * @e: a pointer of environment variables
  * @s: the status of the previous command
+ * @l: line number
  * Return: 0 success
  */
 
